@@ -38,19 +38,24 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 String word = ((EditText) findViewById(R.id.word)).getText().toString();
                 String detail = ((EditText) findViewById(R.id.detail)).getText().toString();
 
+                if(word.equals("") || detail.equals("") ){
+                    Toast.makeText(MainActivity.this, "请填写生词和解释", Toast.LENGTH_SHORT).show();
 
+                }else {
 
                     insertDate(dbHelper.getReadableDatabase(), word, detail);
 
                     Toast.makeText(MainActivity.this, "添加生词成功", Toast.LENGTH_SHORT).show();
 
-             
+                }
 
                 break;
             case R.id.search:
                 String key = ((EditText) findViewById(R.id.key)).getText().toString();
-
-                Cursor cursor = dbHelper.getReadableDatabase()
+                if(key.equals("")){
+                    Toast.makeText(MainActivity.this, "请填写搜索内容", Toast.LENGTH_SHORT).show();
+                }else{
+                    Cursor cursor = dbHelper.getReadableDatabase()
                         .rawQuery("select * from dict where word like ? or detail like ?"
                                 ,new String[]{"%" + key + "%","%" + key + "%"});
 
@@ -59,7 +64,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
                 Intent intent = new Intent(MainActivity.this,ResultActivity.class);
                 intent.putExtras(data);
-                startActivity(intent);
+                startActivity(intent);}
                 break;
         }
     }
