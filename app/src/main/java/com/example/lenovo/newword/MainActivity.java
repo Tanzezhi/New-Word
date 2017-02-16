@@ -38,9 +38,14 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 String word = ((EditText) findViewById(R.id.word)).getText().toString();
                 String detail = ((EditText) findViewById(R.id.detail)).getText().toString();
 
-                insertDate(dbHelper.getReadableDatabase(),word,detail);
 
-                Toast.makeText(MainActivity.this,"添加生词成功",Toast.LENGTH_SHORT).show();
+
+                    insertDate(dbHelper.getReadableDatabase(), word, detail);
+
+                    Toast.makeText(MainActivity.this, "添加生词成功", Toast.LENGTH_SHORT).show();
+
+             
+
                 break;
             case R.id.search:
                 String key = ((EditText) findViewById(R.id.key)).getText().toString();
