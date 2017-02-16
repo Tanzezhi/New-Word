@@ -7,7 +7,10 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.CursorAdapter;
 import android.widget.EditText;
+import android.widget.ListView;
+import android.widget.SimpleCursorAdapter;
 import android.widget.Toast;
 
 import java.util.ArrayList;
@@ -18,6 +21,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     MyDatabaseHelper dbHelper;
     Button insert = null;
     Button search = null;
+    ListView listView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -30,6 +34,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         search = (Button) findViewById(R.id.search);
         insert.setOnClickListener(this);
         search.setOnClickListener(this);
+
+        listView = (ListView)findViewById(R.id.listView);
     }
 
     public void onClick(View view) {
@@ -47,6 +53,13 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
                     Toast.makeText(MainActivity.this, "添加生词成功", Toast.LENGTH_SHORT).show();
 
+                    Cursor cursor_1 = dbHelper.getReadableDatabase()
+                            .rawQuery("select * from dict "
+                                    ,null);
+                    SimpleCursorAdapter cursorAdapter = new SimpleCursorAdapter(MainActivity.this,R.layout.dictionary,
+                            cursor_1,new String[]{"word","detail"},new int[]{R.id.word_2,R.id.detail_2},
+                            CursorAdapter.FLAG_REGISTER_CONTENT_OBSERVER);
+                    listView.setAdapter(cursorAdapter);
                 }
 
                 break;
